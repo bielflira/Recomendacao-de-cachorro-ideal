@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dog AI 🐶</title>
+  <style>
+    body { font-family: Arial; text-align: center; background: #eee; }
+    .box { background: white; padding: 20px; margin: 50px auto; width: 300px; border-radius: 10px; }
+    button { padding: 10px; background: green; color: white; border: none; }
+    img { width: 100%; border-radius: 10px; }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>🐶 Descubra seu cachorro ideal</h2>
+
+  <select id="espaco">
+    <option value="apartamento">Apartamento</option>
+    <option value="casa">Casa</option>
+  </select>
+
+  <button onclick="buscar()">Descobrir</button>
+
+  <div id="resultado"></div>
+</div>
+
+<script>
+async function buscar() {
+  const res = await fetch("http://127.0.0.1:8000/recomendar", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      espaco: document.getElementById("espaco").value,
+      criancas: true
+    })
+  });
+
+  const data = await res.json();
+
+  document.getElementById("resultado").innerHTML =
+    "<p>" + data.resultado + "</p>";
+}
+</script>
+
+</body>
+</html>
